@@ -52,5 +52,26 @@ namespace WinScan
                     Console.WriteLine(ex.getMessage());
                 }
         }
+        
+        protected static string GetWindowsPhysicalPath(string path)
+        {
+            StringBuilder builder = new StringBuilder(255);
+            NativeMethods.GetShortPathName(path, builder, builder.Capacity);
+            path = builder.ToString();
+            uint result = NativeMethods.GetLongPathName(path, builder, builder.Capacity);
+            if (result > 0 && result < builder.Capacity)
+            {
+                builder[0] = char.ToLower(builder[0]);
+                return builder.ToString(0, (int)result);
+            }
+            if (result > 0)
+            {
+                builder = new StringBuilder((int)result);
+                result = NativeMethods.GetLongPathName(path, builder, builder.Capacity);
+                builder[0] = char.ToLower(builder[0]);
+                return builder.ToString(0, (int)result);
+            }
+            return null;
+        }
     }
 }
