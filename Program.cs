@@ -10,6 +10,9 @@ namespace WinScan
     {
         static void Main(string[] args)
         {
+            ulong size = 0L;
+            ulong files = 0L;
+            ulong dirs = 0L;
             DirectoryLookup dl = new DirectoryLookup();
             Stack<string> directoryList = new Stack<string>();   
             if (args.Length == 0)
@@ -19,38 +22,45 @@ namespace WinScan
             }
             string startDirectory = GetWindowsPhysicalPath(args[0]);
             directoryList.Push(@startDirectory);
-            
-            while ( directoryList.Count != 0 )
+
+            while (directoryList.Count != 0)
             {
                 string directory = directoryList.Pop();
                 try
                 {
                     dl.SetDirectory(directory);
                     FileData file;
-                    while ( (file = dl.GetNextFile()) != null )
+                    while ((file = dl.GetNextFile()) != null)
                     {
-                        if ( file.FileName.Equals(".snapshot") || file.FileName.Equals("..") || file.FileName.Equals("."))
+                        if (file.FileName.Equals(".snapshot") || file.FileName.Equals("..") || file.FileName.Equals("."))
                         {
                             // skip
-                        } 
+                        }
                         else
-                        { 
+                        {
                             if (file.IsDirectory == true)
                             {
                                 directoryList.Push(directory + @"\" + file.FileName);
+                                dirs++;
                             }
                             else
                             {
-                                
+                                files++;
+                                size += file.FileSize;
                             }
                         }
                     }
                     dl.close();
-                } 
-                catch ( UnauthorizedAccessException ex)
-                {
-                    Console.WriteLine(ex.getMessage());
                 }
+                catch (UnauthorizedAccessException ex)
+                {
+#if DEBUG
+                    Console.WriteLine(ex.Message);
+#endif            
+                }
+                
+            }
+            Console.WriteLine(startDirectory + "= files: " + files + " dirs: " + dirs + " size: " + size);
         }
         
         protected static string GetWindowsPhysicalPath(string path)
