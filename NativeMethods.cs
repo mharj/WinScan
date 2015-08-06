@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace WinScan
 {
-    class NativeMethods
+    internal class NativeMethods
     {
+        [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindFirstFile(string lpFileName, out WIN32_FIND_DATA lpFindFileData);
+        [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool FindNextFile(IntPtr hFindFile, out WIN32_FIND_DATA lpFindFileData);
+        [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool FindClose(IntPtr hFindFile);
     }
 }
