@@ -21,7 +21,7 @@ namespace WinScan
                 return;
             }
 #if DEBUG
-            Logger.GetInstance().Log("--- WinGreedy start ---");
+            Logger.GetInstance().Log("--- WinScan start ---");
 #endif 
             string startDirectory = GetWindowsPhysicalPath(args[0]);
             directoryList.Push(@startDirectory);
@@ -64,7 +64,7 @@ namespace WinScan
                 
             }
 #if DEBUG
-            Logger.GetInstance().Log("--- WinGreedy stop ---");
+            Logger.GetInstance().Log("--- WinScan stop ---");
 #endif 
 
             Console.WriteLine(startDirectory + "= files: " + files + " dirs: " + dirs + " size: " + size);
