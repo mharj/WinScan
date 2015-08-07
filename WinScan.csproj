@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DirectoryLookup.cs" />
     <Compile Include="FileData.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -20,6 +20,9 @@ namespace WinScan
                 Console.WriteLine("Please give path to scan");
                 return;
             }
+#if DEBUG
+            Logger.GetInstance().Log("--- WinGreedy start ---");
+#endif 
             string startDirectory = GetWindowsPhysicalPath(args[0]);
             directoryList.Push(@startDirectory);
 
@@ -55,11 +58,15 @@ namespace WinScan
                 catch (UnauthorizedAccessException ex)
                 {
 #if DEBUG
-                    Console.WriteLine(ex.Message);
+                    Logger.GetInstance().Log(ex.Message);
 #endif            
                 }
                 
             }
+#if DEBUG
+            Logger.GetInstance().Log("--- WinGreedy stop ---");
+#endif 
+
             Console.WriteLine(startDirectory + "= files: " + files + " dirs: " + dirs + " size: " + size);
         }
         
