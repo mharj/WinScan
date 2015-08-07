@@ -17,6 +17,11 @@ namespace WinScan
             w = File.AppendText("log.txt");
         }
 
+        public void Log(Exception ex )
+        {
+            Log(ex.Message);
+        }
+
         public void Log(string msg)
         {
             w.WriteLine("{0} {1} : {2}",DateTime.Now.ToShortDateString(), DateTime.Now.ToShortTimeString(),msg);

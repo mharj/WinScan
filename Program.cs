@@ -58,7 +58,7 @@ namespace WinScan
                 catch (UnauthorizedAccessException ex)
                 {
 #if DEBUG
-                    Logger.GetInstance().Log(ex.Message);
+                    Logger.GetInstance().Log(ex);
 #endif            
                 }
                 
